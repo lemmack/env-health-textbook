@@ -1,0 +1,61 @@
+name: Deploy mdBook to GitHub Pages
+
+# Controls when the workflow will run
+on:
+  push:
+    branches:
+      - main
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4 # Checks out your repository under $GITHUB_WORKSPACE
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable # Installs the stable Rust toolchain
+        with:
+          components: rustfmt, clippy # Optional: for formatting and linting if you use them
+
+      - name: Install mdBook
+        run: |
+          echo "Installing mdBook..."
+          cargo install mdbook --locked
+          echo "mdBook installed successfully."
+          mdbook --version
+
+      - name: Build mdBook
+        run: |
+          echo "Building mdBook..."
+          mdbook build
+          echo "mdBook build complete."
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload the 'book' directory (default mdBook output)
+          path: ./book
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
