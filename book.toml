@@ -1,0 +1,5 @@
+[book]
+authors = ["Mack"]
+language = "en"
+src = "src"
+title = "The Open-Source Environmental Health Textbook"
