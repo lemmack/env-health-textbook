@@ -9,12 +9,8 @@ description = "An open-source textbook covering key topics in environmental heal
 build-dir = "book" # Default. Change to "docs" if you prefer that for GitHub Pages.
 
 [output.html]
-theme = "light" # Default theme. Others include "rust", "coal", "navy", "ayu"
-default-theme = "light"
-preferred-dark-theme = "ayu" # If you enable theme selection
+# theme = "light" # Default theme. Others include "rust", "coal", "navy", "ayu"
+# default-theme = "light"
+# preferred-dark-theme = "ayu" # If you enable theme selection
 git-repository-url = "https://github.com/lemmack/env-health-textbook" # Adds an edit link
 # You can add more HTML output options here, like custom CSS or JavaScript.
-
-# Example: Enabling MathJax for LaTeX-style math equations
-# [output.html.mathjax-support]
-# enable = true
